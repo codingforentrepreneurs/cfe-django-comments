@@ -15,3 +15,9 @@ class CommentListAPIView(generics.ListAPIView):
         if url:
             return Comment.objects.filter(url=url)
         return Comment.objects.none()
+
+
+
+class CommentCreateAPIView(generics.CreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
