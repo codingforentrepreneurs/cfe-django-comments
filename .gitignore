@@ -1,7 +1,14 @@
+bin/
+include/
+pip-selfcheck.json
+*.sublime-project
+*.sublime-workspace
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
 
 # C extensions
 *.so
