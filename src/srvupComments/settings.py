@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders', # https://github.com/ottoyiu/django-cors-headers
     'rest_framework', # http://www.django-rest-framework.org/
+    'comments',
 ]
 
 MIDDLEWARE = [
