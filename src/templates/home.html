@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 
+
 {% block content %}
 
 <h1>{{ request.build_absolute_uri }}</h1>
+
+<div class='load-comments' data-url='{{ request.build_absolute_uri }}'></div>
 
 {% endblock %}

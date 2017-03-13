@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -16,6 +17,9 @@
     {% endblock content %}
     </div>
     {% include 'base/js.html' %}
+    <script src='{% static "comments/js/cfe.comments.js" %}'></script>
+
+
     <script>
       $(document).ready(function(){
         {% block jquery %}{% endblock %}
