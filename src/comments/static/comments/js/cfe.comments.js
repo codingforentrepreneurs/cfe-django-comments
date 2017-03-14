@@ -4,8 +4,27 @@ $(document).ready(function(){
     $(".load-comments").after("<div class='form-container'></div>")
 
     getComments(dataUrl)
+
+    function renderCommentLine(object){
+      var authorImage = '<div class="media-left">' +
+      '<img class="cfe-user-image media-object" src="' + object.image + '" alt="..."></div>'
+
+
+      var author = "";
+      if (object.user) {
+        author = "<small>" + object.user + "</small>"
+      }
+      var timestamp = new Date(object.timestamp).toLocaleString()
+      var html_ = "<div class='media cfe-media'>" + authorImage +
+                 "<div class='media-body'>" + 
+                  object.content + "<br/>" + author + 
+                  "<small> on " +  timestamp + "</small>"
+                  "</div></div>"
+      return html_
+    }
     
     function getComments(requestUrl){
+        $(".load-comments").html('<h3>Comments</h3>')
         $.ajax({
           method: "GET",
           url: endpoint,
@@ -14,9 +33,9 @@ $(document).ready(function(){
           },
           success: function(data){
             if (data.length > 0){
-              $(".load-comments").html('')
+              
                 $.each(data, function(index, object){
-                  $(".load-comments").append("<li>" + object.content + "</li>")
+                  $(".load-comments").append(renderCommentLine(object))
               })
             }
             var formHtml = generateForm()
@@ -30,7 +49,9 @@ $(document).ready(function(){
     }
 
     function generateForm(){
-      var html_ = "<form method='POST' class='comment-form'><textarea name='content'></textarea><input type='submit' value='Comment'></form>"
+      var html_ = "<form method='POST' class='comment-form'>" +
+        "<textarea class='form-control' placeholder='Your comment...' name='content'></textarea><br/>" + 
+        "<input class='btn btn-default' type='submit' value='Comment'></form>"
       return html_
     }
 

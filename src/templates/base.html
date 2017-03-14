@@ -10,7 +10,7 @@
 
     {% include 'base/css.html' %}
     {% include 'base/bootstrap_defaults.html' %}
-  </head>
+    <link rel='stylesheet' href='{% static "comments/css/cfe.comments.css" %}' />
   <body>
     <div class='container'>
     {% block content %}
@@ -18,7 +18,7 @@
     </div>
     {% include 'base/js.html' %}
     <script src='{% static "comments/js/cfe.safeajax.js" %}'></script>
-    <script src='{% static "comments/js/cfe.comments.js" %}?v=23'></script>
+    <script src='{% static "comments/js/cfe.comments.js" %}?v=6'></script>
 
 
     <script>
