@@ -14,3 +14,16 @@ Learn how to create a reusable Comments App for use in any Django Project.
 
 - [Django Rest Framework JWT](https://github.com/GetBlimp/django-rest-framework-jwt)
     An auth package for our API
+
+
+### Code
+
+[3 - Comments App](../../tree/cc98b2271d3cc5c48bb0b741591da05fd94f2a4a)
+
+[4 & 5 - Load Comments and Ajax Load Comments](../../tree/15d2e32f9bd0fbd1d6e39f9539d974097b399b8e)
+
+[6 - Render Comment Form](../../tree/6be4500b6c69c4b8f719e8916a322e40edaf1896)
+
+[7 - CSRF, Ajax, & Django](../../tree/33be80aed801d7e74874419947bba0e0b4aa2035)
+
+[8 - Improve Comment Styling](../../tree/081c76333b98953cb89a6c15b4ad2177f0700593)
