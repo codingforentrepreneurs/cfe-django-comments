@@ -1,7 +1,7 @@
 $(document).ready(function(){
     var endpoint = 'http://127.0.0.1:8000/api/comments/'
     var dataUrl = $(".load-comments").attr("data-url")
-    
+    $(".load-comments").after("<div class='form-container'></div>")
 
     getComments(dataUrl)
     
@@ -14,12 +14,13 @@ $(document).ready(function(){
           },
           success: function(data){
             if (data.length > 0){
+              $(".load-comments").html('')
                 $.each(data, function(index, object){
-                $(".load-comments").append("<li>" + object.content + "</li>")
+                  $(".load-comments").append("<li>" + object.content + "</li>")
               })
             }
             var formHtml = generateForm()
-            $(".load-comments").after(formHtml)
+            $(".form-container").html(formHtml)
           },
           error: function(data){
             console.log('error')
@@ -34,11 +35,10 @@ $(document).ready(function(){
     }
 
     function handleForm(formData){
-      console.log(formData)
       $.ajax({
         url: endpoint + "create/",
         method: "POST",
-        data: formData,
+        data: formData + "&url=" + dataUrl,
         success: function(data){
           console.log(data)
           getComments(dataUrl)
@@ -50,11 +50,11 @@ $(document).ready(function(){
       })
     }
 
-    // $(document).on('submit', '.comment-form', function(e){
-    //   e.preventDefault()
-    //   var formData = $(this).serialize()
-    //   handleForm(formData)
-    // })
+    $(document).on('submit', '.comment-form', function(e){
+      e.preventDefault()
+      var formData = $(this).serialize()
+      handleForm(formData)
+    })
 
 
 
