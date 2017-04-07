@@ -54,7 +54,22 @@ $(document).ready(function(){
         "<input class='btn btn-default' type='submit' value='Comment'></form>"
       return html_
     }
-
+    function formatErrorMsg(jsonResponse){
+      var message = ""
+      $.each(jsonResponse, function(key, value){
+        if (key == 'detail'){
+          message += value + "<br/>"
+        } else {
+          message += key + ": " + value + "<br/>"
+        }
+        
+      })
+      var formattedMsg = '<div class="srvup-alert-error alert alert-danger alert-dismissible">'+
+      '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+      message +
+      "</div>"
+      return formattedMsg
+    }
     function handleForm(formData){
       $.ajax({
         url: endpoint + "create/",
@@ -66,7 +81,13 @@ $(document).ready(function(){
         },
         error: function(data){
           console.log('error')
-          console.log(data)
+          console.log(data.responseJSON)
+          var formErrorExists = $('.srvup-alert-error')
+          if (formErrorExists.length > 0){
+            formErrorExists.remove()
+          }
+          var msg = formatErrorMsg(data.responseJSON)
+          $(".comment-form textarea").before(msg)
         }
       })
     }
