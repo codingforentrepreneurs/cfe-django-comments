@@ -12,7 +12,7 @@ $(document).ready(function(){
 
       var author = "";
       if (object.user) {
-        author = "<small>" + object.user + "</small>"
+        author = "<small>via " + object.user.username + "</small>"
       }
       var timestamp = new Date(object.timestamp).toLocaleString()
       var html_ = "<div class='media cfe-media'>" + authorImage +
