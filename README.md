@@ -33,3 +33,7 @@ Learn how to create a reusable Comments App for use in any Django Project.
 [10 - Format & Display Error Messages](../../tree/0749cc0cd4dc826147cbc5e76ffb136698c58d8f)
 
 [11 - Setting Cookies in Views](../../tree/9e66341b51972329b0c9278305e1c9898af27145)
+
+[12 - Retrieve Update Delete Api View](../../tree/1832913f82ad8019f41e5cea59177d69c4ef7a88)
+
+
