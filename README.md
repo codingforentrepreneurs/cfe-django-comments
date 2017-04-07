@@ -27,3 +27,9 @@ Learn how to create a reusable Comments App for use in any Django Project.
 [7 - CSRF, Ajax, & Django](../../tree/33be80aed801d7e74874419947bba0e0b4aa2035)
 
 [8 - Improve Comment Styling](../../tree/081c76333b98953cb89a6c15b4ad2177f0700593)
+
+[9 - User Public Serializer](../../tree/7bcc5b7c16d8233cecb02e562040666e04fba5be)
+
+[10 - Format & Display Error Messages](../../tree/0749cc0cd4dc826147cbc5e76ffb136698c58d8f)
+
+[11 - Setting Cookies in Views](../../tree/9e66341b51972329b0c9278305e1c9898af27145)
