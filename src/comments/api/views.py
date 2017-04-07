@@ -1,10 +1,12 @@
 from rest_framework.views import APIView
 from rest_framework import generics
+from rest_framework.mixins import DestroyModelMixin
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
 
 from comments.models import Comment
 
+from .permissions import IsOwnerOrReadOnly
 from .serializers import CommentSerializer
 
 class CommentListAPIView(generics.ListAPIView):
@@ -42,6 +44,21 @@ class CommentCreateAPIView(generics.CreateAPIView):
     def perform_create(self, serializer):
         if self.request.user.is_authenticated():
             serializer.save(user=self.request.user)
+
+
+class CommentUpdateAPIView(DestroyModelMixin, generics.RetrieveUpdateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [IsOwnerOrReadOnly]
+
+    def perform_update(self, serializer):
+        if self.request.user.is_authenticated():
+            serializer.save(user=self.request.user)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
+
 
 
 

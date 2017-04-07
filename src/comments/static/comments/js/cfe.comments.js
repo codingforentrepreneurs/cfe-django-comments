@@ -104,7 +104,10 @@ $(document).ready(function(){
         data: formData + "&url=" + dataUrl,
         success: function(data){
           console.log(data)
-          getComments(dataUrl)
+          // getComments(dataUrl)
+          $(".load-comments").append(renderCommentLine(data))
+          var formHtml = generateForm()
+          $(".form-container").html(formHtml)
         },
         error: function(data){
           console.log('error')

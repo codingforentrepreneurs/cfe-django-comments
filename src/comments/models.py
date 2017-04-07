@@ -15,3 +15,7 @@ class Comment(models.Model):
     def __str__(self):
         return self.url
 
+    @property
+    def owner(self):
+        return self.user
+
