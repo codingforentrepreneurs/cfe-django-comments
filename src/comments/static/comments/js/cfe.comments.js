@@ -1,10 +1,28 @@
+ function getCookie(name) {
+  var cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';');
+      for (var i = 0; i < cookies.length; i++) {
+          var cookie = jQuery.trim(cookies[i]);
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+  }
+
+
 $(document).ready(function(){
     var endpoint = 'http://127.0.0.1:8000/api/comments/'
     var dataUrl = $(".load-comments").attr("data-url")
+    var isUser = false;
     $(".load-comments").after("<div class='form-container'></div>")
 
     getComments(dataUrl)
-
+     
     function renderCommentLine(object){
       var authorImage = '<div class="media-left">' +
       '<img class="cfe-user-image media-object" src="' + object.image + '" alt="..."></div>'
@@ -24,6 +42,10 @@ $(document).ready(function(){
     }
     
     function getComments(requestUrl){
+        // console.log(getCookie('isUser'))
+        isUser = $.parseJSON(getCookie('isUser'));
+        
+        
         $(".load-comments").html('<h3>Comments</h3>')
         $.ajax({
           method: "GET",
@@ -52,7 +74,12 @@ $(document).ready(function(){
       var html_ = "<form method='POST' class='comment-form'>" +
         "<textarea class='form-control' placeholder='Your comment...' name='content'></textarea><br/>" + 
         "<input class='btn btn-default' type='submit' value='Comment'></form>"
-      return html_
+      if (isUser){
+          return html_
+      } else {
+        html_ = '<div class="text-center" style="padding:20px">Login Required to Comment</div>'
+        return html_
+      }
     }
     function formatErrorMsg(jsonResponse){
       var message = ""

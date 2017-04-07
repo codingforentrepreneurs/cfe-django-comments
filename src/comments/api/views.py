@@ -9,7 +9,7 @@ from .serializers import CommentSerializer
 
 class CommentListAPIView(generics.ListAPIView):
     serializer_class = CommentSerializer
-    authentication_classes = []
+    # authentication_classes = []
     permission_classes = []
 
     def get_queryset(self, *args, **kwargs):
@@ -17,6 +17,21 @@ class CommentListAPIView(generics.ListAPIView):
         if url:
             return Comment.objects.filter(url=url)
         return Comment.objects.none()
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        response = Response(serializer.data)
+        response.set_cookie('isUser', 'false')
+        if request.user.is_authenticated():
+            response.set_cookie('isUser', 'true')
+        return response
 
 
 
