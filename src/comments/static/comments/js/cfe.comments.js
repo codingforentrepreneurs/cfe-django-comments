@@ -19,6 +19,7 @@ $(document).ready(function(){
     var endpoint = 'http://127.0.0.1:8000/api/comments/'
     var dataUrl = $(".load-comments").attr("data-url")
     var isUser = false;
+    var authUsername;
     $(".load-comments").after("<div class='form-container'></div>")
 
     getComments(dataUrl)
@@ -33,18 +34,25 @@ $(document).ready(function(){
         author = "<small>via " + object.user.username + "</small>"
       }
       var timestamp = new Date(object.timestamp).toLocaleString()
-      var html_ = "<div class='media cfe-media'>" + authorImage +
+      var htmlStart = "<div class='media cfe-media'>" + authorImage +
                  "<div class='media-body'>" + 
-                  object.content + "<br/>" + author + 
-                  "<small> on " +  timestamp + "</small>"
-                  "</div></div>"
+                  "<p class='cfe-media-content' data-id='" + object.id + "'>" + 
+                  object.content + "</p>" + author + 
+                  "<small> on " +  timestamp
+                  
+      if (object.user) {
+        if (object.user.username == authUsername){
+            htmlStart = htmlStart + ' | <a href="#" class="cfe-media-edit">Edit</a>'
+          } 
+      }
+      var html_ = htmlStart + "</small></div></div>"
       return html_
     }
     
     function getComments(requestUrl){
         // console.log(getCookie('isUser'))
         isUser = $.parseJSON(getCookie('isUser'));
-        
+        authUsername = String(getCookie('authUsername'));
         
         $(".load-comments").html('<h3>Comments</h3>')
         $.ajax({
@@ -127,6 +135,75 @@ $(document).ready(function(){
       var formData = $(this).serialize()
       handleForm(formData)
     })
+
+
+
+    // CFE INLINE Reply Edit
+
+    $(document).on('click', '.cfe-media-edit', function(e){
+      e.preventDefault()
+      // render the form
+      $(this).fadeOut()
+      var contentHolder = $(this).parent().parent().find(".cfe-media-content")
+      var contentTxt = contentHolder.text()
+      var objectId = contentHolder.attr('data-id')
+      $(this).after(generateEditForm(contentTxt, objectId))
+    })
+
+    $(document).on('submit', '.comment-edit-form', function(e){
+      e.preventDefault()
+      var formData = $(this).serialize()
+      var objectId = $(this).attr("data-id")
+      handleEditForm(formData, objectId)
+    })
+
+    function generateEditForm(content, objectId){
+      var html_ = "<form method='POST' class='comment-edit-form' data-id='"+ objectId + "'>" +
+        "<hr/><textarea class='form-control' placeholder='Your comment...' name='content'>" + 
+        content + "</textarea><br/>" + 
+        "<input class='btn btn-default' type='submit' value='Save Edit'>" + 
+        "<button class='btn btn-link comment-edit-cancel'>Cancel</button>" +
+        "<button class='btn btn-danger comment-delete'>Delete</button>"+
+        "<br/></form>"
+      return html_
+    }
+
+    $(document).on('click', '.comment-edit-cancel', function(e){
+      $(this).parent().parent().find('.cfe-media-edit').fadeIn();
+      $(this).parent().remove()
+
+
+    })
+
+    $(document).on('click', '.comment-delete', function(e){
+      e.preventDefault()
+      var dataId = $(this).parent().attr('data-id')
+      $.ajax({
+        method:"DELETE",
+        url: endpoint + dataId + "/",
+        success: function(){
+          getComments(dataUrl)
+        }
+      })
+    })
+
+    function handleEditForm(formData, objectId){
+      $.ajax({
+        url: endpoint + objectId + "/",
+        method: "PUT",
+        data: formData,
+        success: function(data){
+          getComments(dataUrl)
+          
+        },
+        error: function(data){
+          console.log('error')
+          console.log(data.responseJSON)
+          var msg = formatErrorMsg(data.responseJSON)
+          $("[data-id='" + objectId + "'] textarea").before(msg)
+        }
+      })
+    }
 
 
 

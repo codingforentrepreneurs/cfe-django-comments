@@ -17,7 +17,6 @@ class UserPublicSerializer(serializers.ModelSerializer):
             'last_name',
         ]
 
-
 class CommentSerializer(serializers.ModelSerializer):
     user = UserPublicSerializer(read_only=True)
     image = serializers.SerializerMethodField(read_only=True)
@@ -25,6 +24,21 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ('id', 'url', 'user', 'content', 'timestamp', 'updated', 'image')
 
+    def get_image(self, obj):
+        img_  = static("comments/img/user.png")
+        # if obj.user.profile.image:
+            # img_ = obj.user.profile.image
+        return img_
+
+
+class CommentUpdateSerializer(serializers.ModelSerializer):
+    user = UserPublicSerializer(read_only=True)
+    image = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = Comment
+        fields = ('id', 'url', 'user', 'content', 'timestamp', 'updated', 'image')
+        read_only_fields = ['url']
+        
     def get_image(self, obj):
         img_  = static("comments/img/user.png")
         # if obj.user.profile.image:

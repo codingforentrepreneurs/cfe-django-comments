@@ -7,7 +7,7 @@ from rest_framework import authentication, permissions
 from comments.models import Comment
 
 from .permissions import IsOwnerOrReadOnly
-from .serializers import CommentSerializer
+from .serializers import CommentSerializer, CommentUpdateSerializer
 
 class CommentListAPIView(generics.ListAPIView):
     serializer_class = CommentSerializer
@@ -33,6 +33,7 @@ class CommentListAPIView(generics.ListAPIView):
         response.set_cookie('isUser', 'false')
         if request.user.is_authenticated():
             response.set_cookie('isUser', 'true')
+            response.set_cookie('authUsername', str(request.user.username))
         return response
 
 
@@ -48,7 +49,7 @@ class CommentCreateAPIView(generics.CreateAPIView):
 
 class CommentUpdateAPIView(DestroyModelMixin, generics.RetrieveUpdateAPIView):
     queryset = Comment.objects.all()
-    serializer_class = CommentSerializer
+    serializer_class = CommentUpdateSerializer
     permission_classes = [IsOwnerOrReadOnly]
 
     def perform_update(self, serializer):
