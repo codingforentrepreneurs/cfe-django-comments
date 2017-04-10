@@ -37,3 +37,5 @@ Learn how to create a reusable Comments App for use in any Django Project.
 [12 - Retrieve Update Delete Api View](../../tree/1832913f82ad8019f41e5cea59177d69c4ef7a88)
 
 [13 - Inline Editing Comments](../../tree/0dec04da530e9f695945536de802207401b1fb3d)
+
+[14 - Prepare for Reusability](../../tree/02f66eae036ce97191de48c3e60446f4fe64d3e9)
