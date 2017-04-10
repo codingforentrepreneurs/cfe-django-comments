@@ -39,3 +39,5 @@ Learn how to create a reusable Comments App for use in any Django Project.
 [13 - Inline Editing Comments](../../tree/0dec04da530e9f695945536de802207401b1fb3d)
 
 [14 - Prepare for Reusability](../../tree/02f66eae036ce97191de48c3e60446f4fe64d3e9)
+
+[15 - Upgrading for Django v1-11](../../tree/c8bed52e09522ee60b3d42a0305618d21c3e861e)
