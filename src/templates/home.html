@@ -5,6 +5,6 @@
 
 <h1>{{ request.build_absolute_uri }}</h1>
 
-<div class='load-comments' data-url='{{ request.build_absolute_uri }}'></div>
+<div class='cfe-load-comments' data-url='{{ request.build_absolute_uri }}' data-login='{{ login_url }}'></div>
 
 {% endblock %}
